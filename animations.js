@@ -82,18 +82,59 @@
                         }, index * animationConfig.staggerDelay);
                     });
                     
+                    // Special handling for grid containers - animate grid items when parent is visible
+                    if (element.classList.contains('values-grid') || element.classList.contains('content-section')) {
+                        const gridItems = element.querySelectorAll('.grid-item, .content-card');
+                        gridItems.forEach((item, index) => {
+                            setTimeout(() => {
+                                item.classList.add('is-visible');
+                            }, 300 + (index * animationConfig.staggerDelay)); // Delay after section becomes visible
+                        });
+                    }
+                    
                     // Stop observing once animated
                     observer.unobserve(element);
                 }
             });
         }, {
-            rootMargin: animationConfig.rootMargin,
-            threshold: animationConfig.threshold
+            rootMargin: '0px 0px -50px 0px', // More lenient - trigger earlier
+            threshold: 0.05 // Lower threshold to trigger sooner
         });
+
+        // Helper function to check if element is in viewport and make visible
+        function checkInitialVisibility(element) {
+            const rect = element.getBoundingClientRect();
+            // More lenient check - if element is mostly in viewport or close to it
+            const isInViewport = rect.top < window.innerHeight + 200 && rect.bottom > -200;
+            if (isInViewport && !element.classList.contains('is-visible')) {
+                // Add visible class immediately
+                element.classList.add('is-visible');
+                
+                // Also trigger grid items if it's a grid section
+                if (element.classList.contains('values-grid') || element.classList.contains('content-section')) {
+                    const gridItems = element.querySelectorAll('.grid-item, .content-card');
+                    if (gridItems.length > 0) {
+                        // Small delay to ensure parent transition starts first
+                        setTimeout(() => {
+                            gridItems.forEach((item, index) => {
+                                setTimeout(() => {
+                                    item.classList.add('is-visible');
+                                }, index * animationConfig.staggerDelay);
+                            });
+                        }, 100);
+                    }
+                }
+                return true;
+            }
+            return false;
+        }
 
         // Observe all elements with animate-on-scroll class
         document.querySelectorAll('.animate-on-scroll').forEach(el => {
-            observer.observe(el);
+            // Check if already in viewport on page load
+            if (!checkInitialVisibility(el)) {
+                observer.observe(el);
+            }
         });
 
         // Observe sections for section-level animations
@@ -102,22 +143,25 @@
                 if (!el.classList.contains('animate-on-scroll')) {
                     el.classList.add('animate-on-scroll');
                 }
-                observer.observe(el);
+                // Check if already in viewport on page load
+                if (!checkInitialVisibility(el)) {
+                    observer.observe(el);
+                }
             }
         });
     }
 
     // Stagger animations for grid items and lists
     function initStaggerAnimations() {
-        const grids = document.querySelectorAll('.grid-container, .content-grid, .footer-container');
-        
-        grids.forEach(grid => {
-            const items = grid.querySelectorAll('.grid-item, .content-card, .footer-col');
-            items.forEach((item, index) => {
-                item.classList.add('animate-on-scroll');
-                item.style.animationDelay = `${index * 0.1}s`;
+        // Don't auto-animate grid items - they'll be triggered by parent section visibility
+        // Only handle footer columns separately
+        const footerContainer = document.querySelector('.footer-container');
+        if (footerContainer) {
+            const footerCols = footerContainer.querySelectorAll('.footer-col');
+            footerCols.forEach((col, index) => {
+                col.style.transitionDelay = `${index * 0.1}s`;
             });
-        });
+        }
     }
 
     // Smooth scroll for anchor links
@@ -146,17 +190,54 @@
         return;
     }
 
-    // Initialize everything when DOM is ready
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', () => {
-            initAnimations();
-            initSmoothScroll();
-            initParallax();
+    // Check and animate sections that are already in viewport on page load
+    function checkSectionsInViewport() {
+        document.querySelectorAll('.values-grid, .content-section, section:not(.hero):not(.page-header):not(.involvement-section)').forEach(section => {
+            if (!section.classList.contains('is-visible')) {
+                const rect = section.getBoundingClientRect();
+                const windowHeight = window.innerHeight || document.documentElement.clientHeight;
+                // Check if section is visible or close to viewport
+                const isInView = rect.top < windowHeight + 100 && rect.bottom > -100;
+                
+                if (isInView) {
+                    section.classList.add('is-visible');
+                    
+                    // Animate grid items
+                    const gridItems = section.querySelectorAll('.grid-item, .content-card');
+                    if (gridItems.length > 0) {
+                        setTimeout(() => {
+                            gridItems.forEach((item, index) => {
+                                setTimeout(() => {
+                                    item.classList.add('is-visible');
+                                }, index * animationConfig.staggerDelay);
+                            });
+                        }, 100);
+                    }
+                }
+            }
         });
-    } else {
+    }
+
+    // Initialize everything when DOM is ready
+    function initializeAll() {
+        // First, check for sections already in viewport
+        checkSectionsInViewport();
+        
+        // Then initialize animations
         initAnimations();
         initSmoothScroll();
         initParallax();
+        
+        // Double-check after a short delay to catch any missed elements
+        setTimeout(checkSectionsInViewport, 100);
+        setTimeout(checkSectionsInViewport, 500);
+    }
+    
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initializeAll);
+    } else {
+        // DOM already loaded, initialize immediately
+        initializeAll();
     }
 
     // Re-initialize animations for dynamically loaded content
