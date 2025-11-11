@@ -113,6 +113,16 @@ nav ul li a {
     position: relative;
 }
 
+/* Ensure button is completely hidden and doesn't interfere on desktop */
+@media (min-width: 993px) {
+    .mobile-menu-toggle {
+        display: none !important;
+        visibility: hidden;
+        pointer-events: none;
+        z-index: -1;
+    }
+}
+
 .mobile-menu-toggle span {
     width: 100%;
     height: 2px;
