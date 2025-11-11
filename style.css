@@ -667,6 +667,44 @@ footer {
     .charger-style-light {
         font-size: 18px;
     }
+    
+    /* Internal pages - match home page scaling */
+    .page-header h1 {
+        font-size: 38px;
+    }
+    
+    .page-header p {
+        font-size: 15px;
+    }
+    
+    .page-content h2 {
+        font-size: 28px;
+    }
+    
+    .page-content h3 {
+        font-size: 20px;
+    }
+    
+    .page-content p,
+    .page-content li {
+        font-size: 14px;
+    }
+    
+    .cta-section h2 {
+        font-size: 28px;
+    }
+    
+    .cta-section p {
+        font-size: 14px;
+    }
+    
+    .content-card h3 {
+        font-size: 18px;
+    }
+    
+    .content-card p {
+        font-size: 13px;
+    }
 }
 
 @media (max-width: 992px) {
@@ -842,6 +880,44 @@ footer {
     .charger-style-light {
         font-size: 16px;
     }
+    
+    /* Internal pages - match home page scaling at 992px */
+    .page-header h1 {
+        font-size: 34px;
+    }
+    
+    .page-header p {
+        font-size: 15px;
+    }
+    
+    .page-content h2 {
+        font-size: 26px;
+    }
+    
+    .page-content h3 {
+        font-size: 19px;
+    }
+    
+    .page-content p,
+    .page-content li {
+        font-size: 14px;
+    }
+    
+    .cta-section h2 {
+        font-size: 26px;
+    }
+    
+    .cta-section p {
+        font-size: 14px;
+    }
+    
+    .content-card h3 {
+        font-size: 18px;
+    }
+    
+    .content-card p {
+        font-size: 13px;
+    }
 
     .involvement-section {
         padding: 100px 5%;
@@ -952,6 +1028,44 @@ footer {
     
     .grid-item p {
         font-size: 13px;
+    }
+    
+    /* Internal pages - match home page scaling at 768px */
+    .page-header h1 {
+        font-size: 28px;
+    }
+    
+    .page-header p {
+        font-size: 14px;
+    }
+    
+    .page-content h2 {
+        font-size: 22px;
+    }
+    
+    .page-content h3 {
+        font-size: 18px;
+    }
+    
+    .page-content p,
+    .page-content li {
+        font-size: 13px;
+    }
+    
+    .cta-section h2 {
+        font-size: 22px;
+    }
+    
+    .cta-section p {
+        font-size: 13px;
+    }
+    
+    .content-card h3 {
+        font-size: 16px;
+    }
+    
+    .content-card p {
+        font-size: 12px;
     }
     
     .tab-content-wrapper {
