@@ -90,6 +90,11 @@ nav ul {
     gap: 30px;
 }
 
+/* Hide nav-cta inside nav on desktop - only show desktop-cta */
+nav .nav-cta {
+    display: none;
+}
+
 nav ul li a {
     font-size: 13px;
     font-weight: 500;
