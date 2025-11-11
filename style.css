@@ -152,8 +152,6 @@ header nav ul li a {
 }
 
 .hero-content {
-    animation: fadeInUp 0.8s ease-out;
-    animation-fill-mode: forwards;
     max-width: 1200px;
     width: 100%;
 }
@@ -198,6 +196,16 @@ header nav ul li a {
     color: #222;
     margin-bottom: 10px;
     letter-spacing: -0.02em;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.values-grid.is-visible h2 {
+    opacity: 1;
+    transform: translateY(0);
+    transition-delay: 0.1s;
 }
 
 .values-grid .section-subheading {
@@ -207,6 +215,16 @@ header nav ul li a {
     margin-bottom: 45px;
     letter-spacing: -0.01em;
     line-height: 1.5;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.values-grid.is-visible .section-subheading {
+    opacity: 1;
+    transform: translateY(0);
+    transition-delay: 0.2s;
 }
 
 .grid-container {
@@ -220,9 +238,6 @@ header nav ul li a {
 }
 
 .grid-item {
-    opacity: 0; /* Start hidden */
-    animation: fadeInUp 0.7s ease-out;
-    animation-fill-mode: forwards;
     display: flex;
     flex-direction: column;
 }
@@ -255,15 +270,6 @@ header nav ul li a {
     margin: 0;
 }
 
-.grid-item:nth-child(1) {
-    animation-delay: 0.2s;
-}
-.grid-item:nth-child(2) {
-    animation-delay: 0.4s;
-}
-.grid-item:nth-child(3) {
-    animation-delay: 0.6s;
-}
 
 
 /* ======== GET INVOLVED SECTION ======== */
@@ -316,11 +322,6 @@ header nav ul li a {
 
 .involvement-content {
     max-width: 700px;
-    /* NEW Animation */
-    opacity: 0;
-    animation: fadeInUp 0.7s ease-out;
-    animation-fill-mode: forwards;
-    animation-delay: 0.8s;
 }
 
 .involvement-content h4 {
@@ -691,6 +692,14 @@ footer {
         display: inline-block;
     }
     
+    .cta-section {
+        padding: 90px 5%;
+        min-height: 450px;
+    }
+    
+    .cta-section h2 {
+        font-size: 28px;
+    }
 
     footer {
         padding: 80px 5% 40px;
@@ -791,7 +800,16 @@ footer {
     }
     
     .cta-section {
-        padding: 40px 5%;
+        padding: 80px 5%;
+        min-height: 400px;
+    }
+    
+    .cta-section h2 {
+        font-size: 26px;
+    }
+    
+    .cta-section p {
+        font-size: 14px;
     }
     
     header.internal-header {
@@ -939,16 +957,25 @@ footer {
 }
 
 .cta-section {
-    background-color: #f8f8f8;
-    padding: 60px 8%;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('assets/pexels-caleboquendo-34597931.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    padding: 100px 8%;
     text-align: center;
     margin-top: 80px;
+    min-height: 500px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
 }
 
 .cta-section h2 {
     font-size: 32px;
     font-weight: 600;
-    color: #222;
+    color: #fff;
     margin-bottom: 16px;
     margin-top: 0;
 }
@@ -956,7 +983,7 @@ footer {
 .cta-section p {
     font-size: 15px;
     line-height: 1.7;
-    color: #555;
+    color: rgba(255, 255, 255, 0.95);
     margin-bottom: 30px;
     max-width: 700px;
     margin-left: auto;
@@ -997,13 +1024,336 @@ header.internal-header .nav-cta .button-light:hover {
 }
 
 /* ======== ANIMATIONS ======== */
+
+/* Base animation keyframes */
 @keyframes fadeInUp {
     from {
         opacity: 0;
-        transform: translateY(20px);
+        transform: translateY(30px);
     }
     to {
         opacity: 1;
         transform: translateY(0);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes slideInRight {
+    from {
+        opacity: 0;
+        transform: translateX(50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes scaleIn {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes fadeInScale {
+    from {
+        opacity: 0;
+        transform: scale(0.9) translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+@keyframes headerSlideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Animation utility classes */
+.animate-on-load {
+    opacity: 0;
+    animation: fadeInUp 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+.animate-on-scroll {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.animate-on-scroll.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Stagger animation support */
+.animate-on-scroll[style*="animation-delay"] {
+    transition-delay: var(--delay, 0s);
+}
+
+/* Header animation - only animate on load if class is present */
+header:not(.internal-header) {
+    opacity: 0;
+}
+
+header.animate-on-load:not(.internal-header) {
+    animation: headerSlideDown 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+    animation-delay: 0.1s;
+}
+
+header.internal-header {
+    opacity: 1;
+}
+
+/* Hero/Page Header animations */
+.hero-content {
+    opacity: 0;
+}
+
+.hero-content.animate-on-load {
+    animation: fadeInUp 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+    animation-delay: 0.3s;
+}
+
+.page-header {
+    opacity: 0;
+}
+
+.page-header.animate-on-load {
+    animation: fadeInUp 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+    animation-delay: 0.2s;
+}
+
+/* Section animations */
+section:not(.hero):not(.page-header):not(.involvement-section),
+.values-grid,
+.content-section,
+.cta-section {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+section:not(.hero):not(.page-header):not(.involvement-section).is-visible,
+.values-grid.is-visible,
+.content-section.is-visible,
+.cta-section.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Involvement section - background stays visible, only content animates */
+.involvement-section {
+    opacity: 1;
+}
+
+.involvement-content {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.involvement-section.is-visible .involvement-content {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Grid item animations */
+.grid-item,
+.content-card {
+    opacity: 0;
+    transform: translateY(30px) scale(0.98);
+    transition: opacity 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.grid-item.is-visible,
+.content-card.is-visible {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+
+/* Footer animations */
+footer {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+footer.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.footer-col {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+footer.is-visible .footer-col {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+footer.is-visible .footer-col:nth-child(1) {
+    transition-delay: 0.1s;
+}
+
+footer.is-visible .footer-col:nth-child(2) {
+    transition-delay: 0.2s;
+}
+
+footer.is-visible .footer-col:nth-child(3) {
+    transition-delay: 0.3s;
+}
+
+/* Image animations */
+.image-section img {
+    opacity: 0;
+    transform: scale(1.05);
+    transition: opacity 1s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                transform 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.image-section.is-visible img {
+    opacity: 1;
+    transform: scale(1);
+}
+
+/* Text content animations */
+.content-section h2,
+.content-section h3,
+.content-section p {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.content-section.is-visible h2,
+.content-section.is-visible h3,
+.content-section.is-visible p {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.content-section.is-visible h2 {
+    transition-delay: 0.1s;
+}
+
+.content-section.is-visible h3 {
+    transition-delay: 0.2s;
+}
+
+.content-section.is-visible p {
+    transition-delay: 0.3s;
+}
+
+/* Button animations */
+.button {
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    position: relative;
+    overflow: hidden;
+}
+
+.button::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+.button:hover::before {
+    width: 300px;
+    height: 300px;
+}
+
+/* CTA section content animation */
+.cta-section h2,
+.cta-section p,
+.cta-section .button {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.cta-section.is-visible h2 {
+    opacity: 1;
+    transform: translateY(0);
+    transition-delay: 0.2s;
+}
+
+.cta-section.is-visible p {
+    opacity: 1;
+    transform: translateY(0);
+    transition-delay: 0.4s;
+}
+
+.cta-section.is-visible .button {
+    opacity: 1;
+    transform: translateY(0);
+    transition-delay: 0.6s;
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+    
+    .animate-on-scroll,
+    .animate-on-load {
+        opacity: 1 !important;
+        transform: none !important;
     }
 }
