@@ -172,6 +172,10 @@ header nav ul li a {
     line-height: 1.5;
 }
 
+.mobile-break {
+    display: none;
+}
+
 .hero-content .button-light {
     background-color: #fff;
     color: #222;
@@ -733,6 +737,10 @@ footer {
     .hero-content p {
         font-size: 14px;
         margin-bottom: 28px;
+    }
+    
+    .mobile-break {
+        display: inline;
     }
     
     .values-grid h2 {
