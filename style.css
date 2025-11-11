@@ -1009,6 +1009,15 @@ footer {
         header.internal-header nav ul {
             display: flex;
         }
+        
+        /* Show desktop nav-cta, hide the one inside nav */
+        .nav-cta {
+            display: block !important;
+        }
+        
+        nav .nav-cta {
+            display: none !important;
+        }
     }
     
 }
