@@ -1273,7 +1273,10 @@ footer.is-visible .footer-col:nth-child(3) {
 /* Text content animations */
 .content-section h2,
 .content-section h3,
-.content-section p {
+.content-section p,
+.content-section ul,
+.content-section ol,
+.content-section li {
     opacity: 0;
     transform: translateY(20px);
     transition: opacity 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94),
@@ -1282,7 +1285,10 @@ footer.is-visible .footer-col:nth-child(3) {
 
 .content-section.is-visible h2,
 .content-section.is-visible h3,
-.content-section.is-visible p {
+.content-section.is-visible p,
+.content-section.is-visible ul,
+.content-section.is-visible ol,
+.content-section.is-visible li {
     opacity: 1;
     transform: translateY(0);
 }
@@ -1297,6 +1303,15 @@ footer.is-visible .footer-col:nth-child(3) {
 
 .content-section.is-visible p {
     transition-delay: 0.3s;
+}
+
+.content-section.is-visible ul,
+.content-section.is-visible ol {
+    transition-delay: 0.4s;
+}
+
+.content-section.is-visible li {
+    transition-delay: 0.5s;
 }
 
 /* Button animations */

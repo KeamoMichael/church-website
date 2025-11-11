@@ -83,7 +83,7 @@
                     });
                     
                     // Special handling for grid containers - animate grid items when parent is visible
-                    if (element.classList.contains('values-grid') || element.classList.contains('content-section')) {
+                    if (element.classList.contains('values-grid') || element.classList.contains('content-section') || element.classList.contains('page-content')) {
                         const gridItems = element.querySelectorAll('.grid-item, .content-card');
                         gridItems.forEach((item, index) => {
                             setTimeout(() => {
@@ -91,6 +91,20 @@
                             }, 300 + (index * animationConfig.staggerDelay)); // Delay after section becomes visible
                         });
                     }
+                    
+                    // Also handle nested content sections
+                    const nestedSections = element.querySelectorAll('.content-section');
+                    nestedSections.forEach(nestedSection => {
+                        if (!nestedSection.classList.contains('is-visible')) {
+                            nestedSection.classList.add('is-visible');
+                            const cards = nestedSection.querySelectorAll('.content-card');
+                            cards.forEach((card, index) => {
+                                setTimeout(() => {
+                                    card.classList.add('is-visible');
+                                }, 400 + (index * animationConfig.staggerDelay));
+                            });
+                        }
+                    });
                     
                     // Stop observing once animated
                     observer.unobserve(element);
@@ -138,7 +152,7 @@
         });
 
         // Observe sections for section-level animations
-        document.querySelectorAll('section, .content-section, .cta-section, .values-grid, .involvement-section, footer').forEach(el => {
+        document.querySelectorAll('section, .content-section, .cta-section, .values-grid, .involvement-section, .page-content, footer').forEach(el => {
             if (!el.classList.contains('hero') && !el.classList.contains('page-header')) {
                 if (!el.classList.contains('animate-on-scroll')) {
                     el.classList.add('animate-on-scroll');
@@ -147,6 +161,16 @@
                 if (!checkInitialVisibility(el)) {
                     observer.observe(el);
                 }
+            }
+        });
+        
+        // Also observe all content sections individually (they might be nested)
+        document.querySelectorAll('.content-section').forEach(el => {
+            if (!el.classList.contains('animate-on-scroll')) {
+                el.classList.add('animate-on-scroll');
+            }
+            if (!checkInitialVisibility(el)) {
+                observer.observe(el);
             }
         });
     }
@@ -192,17 +216,18 @@
 
     // Check and animate sections that are already in viewport on page load
     function checkSectionsInViewport() {
-        document.querySelectorAll('.values-grid, .content-section, section:not(.hero):not(.page-header):not(.involvement-section)').forEach(section => {
+        // Check all sections and content sections
+        document.querySelectorAll('.values-grid, .content-section, section:not(.hero):not(.page-header):not(.involvement-section), .page-content').forEach(section => {
             if (!section.classList.contains('is-visible')) {
                 const rect = section.getBoundingClientRect();
                 const windowHeight = window.innerHeight || document.documentElement.clientHeight;
                 // Check if section is visible or close to viewport
-                const isInView = rect.top < windowHeight + 100 && rect.bottom > -100;
+                const isInView = rect.top < windowHeight + 200 && rect.bottom > -200;
                 
                 if (isInView) {
                     section.classList.add('is-visible');
                     
-                    // Animate grid items
+                    // Animate grid items and content cards
                     const gridItems = section.querySelectorAll('.grid-item, .content-card');
                     if (gridItems.length > 0) {
                         setTimeout(() => {
@@ -212,6 +237,31 @@
                                 }, index * animationConfig.staggerDelay);
                             });
                         }, 100);
+                    }
+                }
+            }
+        });
+        
+        // Also check individual content sections that might be nested
+        document.querySelectorAll('.content-section').forEach(section => {
+            if (!section.classList.contains('is-visible')) {
+                const rect = section.getBoundingClientRect();
+                const windowHeight = window.innerHeight || document.documentElement.clientHeight;
+                const isInView = rect.top < windowHeight + 300 && rect.bottom > -300;
+                
+                if (isInView) {
+                    section.classList.add('is-visible');
+                    
+                    // Animate content cards within this section
+                    const cards = section.querySelectorAll('.content-card');
+                    if (cards.length > 0) {
+                        setTimeout(() => {
+                            cards.forEach((card, index) => {
+                                setTimeout(() => {
+                                    card.classList.add('is-visible');
+                                }, index * animationConfig.staggerDelay);
+                            });
+                        }, 150);
                     }
                 }
             }
@@ -231,6 +281,28 @@
         // Double-check after a short delay to catch any missed elements
         setTimeout(checkSectionsInViewport, 100);
         setTimeout(checkSectionsInViewport, 500);
+        setTimeout(checkSectionsInViewport, 1000);
+        
+        // Also make sure all content sections that are in viewport get visible class
+        // This is a more aggressive check to ensure nothing is missed
+        setTimeout(() => {
+            document.querySelectorAll('.content-section').forEach(section => {
+                if (!section.classList.contains('is-visible')) {
+                    const rect = section.getBoundingClientRect();
+                    const windowHeight = window.innerHeight || document.documentElement.clientHeight;
+                    // Very lenient check - if it's anywhere near the viewport, make it visible
+                    if (rect.top < windowHeight + 500 && rect.bottom > -500) {
+                        section.classList.add('is-visible');
+                        const cards = section.querySelectorAll('.content-card');
+                        cards.forEach((card, index) => {
+                            setTimeout(() => {
+                                card.classList.add('is-visible');
+                            }, 200 + (index * animationConfig.staggerDelay));
+                        });
+                    }
+                }
+            });
+        }, 1500);
     }
     
     if (document.readyState === 'loading') {
