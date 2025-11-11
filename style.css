@@ -126,6 +126,11 @@ header.internal-header .mobile-menu-toggle span {
     background-color: #222;
 }
 
+/* Change hamburger icon to dark when menu is open on home page */
+header:not(.internal-header) .mobile-menu-toggle.active span {
+    background-color: #222;
+}
+
 .mobile-menu-toggle.active span:nth-child(1) {
     transform: rotate(45deg) translate(8px, 8px);
 }
