@@ -194,6 +194,12 @@ header nav ul li a {
     width: 100%;
 }
 
+.pastors-grid {
+    padding: 0;
+    background-color: #ffffff;
+    margin-bottom: 60px;
+}
+
 .values-grid h2 {
     font-size: 32px;
     font-weight: 600;
@@ -245,6 +251,8 @@ header nav ul li a {
 .pastors-grid-container {
     grid-template-columns: repeat(2, 1fr);
     gap: 15px;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
 .pastor-placeholder {
