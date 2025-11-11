@@ -288,7 +288,7 @@ header nav ul li a {
 }
 
 /* Pastors grid - 2 columns (for Meet Our Pastors section) */
-.values-grid:has(.grid-container:has(.grid-item:nth-child(2):last-child)) .grid-container {
+.pastors-section .grid-container {
     grid-template-columns: repeat(2, 1fr);
     max-width: 1200px;
     margin: 0 auto;
@@ -812,8 +812,8 @@ footer {
         gap: 40px;
     }
     
-    /* Pastors section - 2 columns on tablet, 1 on mobile */
-    .values-grid:has(.grid-container:has(.grid-item:nth-child(2):last-child)) .grid-container {
+    /* Pastors section - 2 columns on tablet */
+    .pastors-section .grid-container {
         grid-template-columns: repeat(2, 1fr);
         gap: 40px;
     }
