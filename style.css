@@ -935,6 +935,12 @@ footer {
         height: 350px;
     }
     
+    /* Pastors section - 1 column on mobile */
+    .pastors-section .grid-container {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+    
     .grid-item h3 {
         font-size: 16px;
     }
