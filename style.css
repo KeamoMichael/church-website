@@ -1365,6 +1365,12 @@ section:not(.hero):not(.page-header):not(.involvement-section).is-visible,
     transform: translateY(0) scale(1);
 }
 
+/* Ensure images inside grid items are visible */
+.grid-item.is-visible img {
+    opacity: 1 !important;
+    display: block !important;
+}
+
 /* Footer animations */
 footer {
     opacity: 0;
