@@ -715,6 +715,10 @@ footer {
         text-align: center;
         gap: 40px;
     }
+    
+    .footer-col .footer-logo-img {
+        margin: 0 auto;
+    }
 
     .social-links {
         justify-content: center;
