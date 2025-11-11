@@ -1,6 +1,6 @@
-# Hope Chapel Website
+# Harmony Church Website
 
-A modern, responsive website for Hope Chapel featuring multiple pages including About Us, Sermons, Ministries, Events, and more.
+A modern, responsive website for Harmony Church featuring multiple pages including About Us, Sermons, Ministries, Events, and more.
 
 ## Features
 
