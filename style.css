@@ -731,8 +731,8 @@ footer {
         color: #222 !important;
     }
     
-    /* Hide nav-cta outside nav on mobile */
-    .nav-cta:not(nav .nav-cta) {
+    /* Hide all nav-cta on mobile by default */
+    .nav-cta {
         display: none !important;
     }
     
